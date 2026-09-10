@@ -31,6 +31,15 @@ new_car = {
 new_car_df = pd.DataFrame([new_car])
 
 # --- Prediction ---
-predicted_price = model.predict(new_car_df)[0]
+predicted_price_inr = model.predict(new_car_df)[0]
 
-print(f"Predicted selling price: {predicted_price:,.0f}")
+# Approximate conversions for reference
+INR_TO_USD = 0.01058668
+INR_TO_DZD = 1.4031
+
+predicted_price_usd = predicted_price_inr * INR_TO_USD
+predicted_price_dzd = predicted_price_inr * INR_TO_DZD
+
+print(f"Predicted selling price: ₹{predicted_price_inr:,.0f} INR")
+print(f"  ≈ ${predicted_price_usd:,.0f} USD")
+print(f"  ≈ {predicted_price_dzd:,.0f} DZD")

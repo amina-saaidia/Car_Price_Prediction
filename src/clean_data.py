@@ -26,6 +26,9 @@ def load_raw(path="data/raw/car_details_v3.csv") -> pd.DataFrame:
 def clean(df: pd.DataFrame, current_year: int = 2026) -> pd.DataFrame:
     df = df.copy()
 
+    # --- FIX: Drop exact duplicate rows to prevent target memorization ---
+    df = df.drop_duplicates()
+
     # --- Rows with no target are dropped ---
     df = df.dropna(subset=["selling_price"])
 
@@ -43,17 +46,6 @@ def clean(df: pd.DataFrame, current_year: int = 2026) -> pd.DataFrame:
     # --- Columns no longer needed in raw form are dropped ---
     df = df.drop(columns=["name", "mileage", "engine", "max_power", "torque"])
 
-    # --- Missing values ---
-    # Numeric columns are filled with the median (robust to outliers)
-    for col in ["mileage_kmpl", "engine_cc", "max_power_bhp", "seats"]:
-        df[col] = df[col].fillna(df[col].median())
-
-    # --- Outliers ---
-    # km_driven / selling_price are capped at the 99th percentile
-    for col in ["km_driven", "selling_price"]:
-        cap = df[col].quantile(0.99)
-        df[col] = np.where(df[col] > cap, cap, df[col])
-
     # --- 'owner' is simplified into an ordinal scale ---
     owner_map = {
         "First Owner": 1,
@@ -63,6 +55,10 @@ def clean(df: pd.DataFrame, current_year: int = 2026) -> pd.DataFrame:
         "Test Drive Car": 0,
     }
     df["owner_num"] = df["owner"].map(owner_map)
+
+    # NOTE: Global fillna(median) and quantile(0.99) capping were removed 
+    # to prevent data leakage across train/test sets. Imputation is now 
+    # handled safely inside train_model.py.
 
     return df.reset_index(drop=True)
 

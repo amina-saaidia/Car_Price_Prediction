@@ -18,6 +18,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
@@ -36,11 +37,16 @@ def load_clean(path="data/processed/car_clean.csv") -> pd.DataFrame:
 
 
 def build_pipeline(model) -> Pipeline:
-    """Wrap a model in a preprocessing pipeline: one-hot encode categoricals,
-    pass numeric features through unchanged."""
+    """Wrap a model in a preprocessing pipeline: handle missing numeric values 
+    with SimpleImputer (leak-free), one-hot encode categoricals."""
+    
+    num_transformer = Pipeline(steps=[
+        ("imputer", SimpleImputer(strategy="median"))
+    ])
+
     preprocessor = ColumnTransformer(
         transformers=[
-            ("num", "passthrough", NUMERIC_FEATURES),
+            ("num", num_transformer, NUMERIC_FEATURES),
             ("cat", OneHotEncoder(handle_unknown="ignore"), CATEGORICAL_FEATURES),
         ]
     )
