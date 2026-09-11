@@ -1,13 +1,9 @@
-# Car Price Prediction 🚗
+# 🚗 EXPS - Car Price Prediction
 
-Predicting the resale price of used cars using regression models, built as
-part of the EXPS Nexus Data Science Internship (Algeria Pilot Cohort 01).
+Predicts the resale price of used cars using regression models, built as
+Task 3 of the EXPS Nexus Data Science Internship (Algeria Pilot Cohort 01).
 
 ## Overview
-
-This project uses the **CarDekho Vehicle Dataset** (used-car listings from
-India) to predict `selling_price` from features like car age, kilometers
-driven, fuel type, transmission, engine size, and horsepower.
 
 **Task requirements covered:**
 - Car-related features including **brand** (a proxy for brand goodwill/reputation
@@ -81,7 +77,7 @@ earlier version had duplicate listings leaking between the training and
 test sets. A lower score from a correct, leak-free setup is more
 trustworthy than a higher score that isn't.
 
-## Key findings
+## Key Findings
 
 - `max_power_bhp` is by far the strongest predictor of price, followed by `car_age`.
 - Feature importance from the trained model matches the correlation patterns
@@ -94,11 +90,16 @@ trustworthy than a higher score that isn't.
 - Predicted vs. actual prices track the diagonal closely across the full
   price range, with no systematic bias.
 
-## How to run locally
+## Live Demo
+
+Try the interactive Streamlit app:
+**https://carpriceprediction-vlzxbrkgnwc5lyjwqqmxdc.streamlit.app/**
+
+## How to Run Locally
 
 ```bash
-git clone https://github.com/<your-username>/car-price-prediction.git
-cd car-price-prediction
+git clone https://github.com/amina-saaidia/Car_Price_Prediction.git
+cd Car_Price_Prediction
 pip install -r requirements.txt
 
 # Reproduce the cleaned dataset
@@ -117,19 +118,19 @@ streamlit run app.py
 jupyter notebook notebooks/eda.ipynb
 ```
 
-## Project structure
+## Project Structure
 
-```
-car-price-prediction/
+```text
+Car_Price_Prediction/
 ├── data/
 │   ├── raw/car_details_v3.csv
 │   └── processed/car_clean.csv
 ├── notebooks/
 │   └── eda.ipynb
 ├── src/
-│   ├── clean_data.py              
-│   ├── train_model.py               
-│   └── predict.py                 
+│   ├── clean_data.py
+│   ├── train_model.py
+│   └── predict.py
 ├── models/
 │   └── best_model.pkl
 ├── visuals/
@@ -145,7 +146,7 @@ car-price-prediction/
 └── README.md
 ```
 
-## Real-world applications
+## Real-World Applications
 
 Accurate car price prediction has direct use cases on both sides of the
 used-car market, particularly within the Indian market this model was
@@ -163,7 +164,7 @@ trained on:
   retrained on data from that specific market, since pricing patterns
   don't transfer directly across regions.
 
-## Scope and limitations
+## Scope and Limitations
 
 - This model only reflects the **Indian used-car market** it was trained
   on. Brand availability, import taxes, and buyer preferences differ
@@ -176,17 +177,7 @@ trained on:
 - The dataset covers a specific time period and may not reflect current
   market prices.
 
-## Sample visuals
-
-**EDA overview** — price vs. age, price vs. km driven, price by fuel/transmission
-`visuals/eda_overview.png`
-
-**Feature importance (Gradient Boosting)**
-`visuals/feature_importance.png`
-
-**Predicted vs. actual price**
-`visuals/predicted_vs_actual.png`
-
 ## Author
 
-Built as Task 3 of the EXPS Nexus Data Science Internship.
+Built as Task 3 of the EXPS Nexus Data Science Internship (Algeria Pilot
+Cohort 01).
