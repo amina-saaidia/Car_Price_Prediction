@@ -176,6 +176,13 @@ trained on:
   significant in Algeria, for example) are not captured by this model.
 - The dataset covers a specific time period and may not reflect current
   market prices.
+  
+## Future Improvements
+
+- Replace the single train/test split with k-fold cross-validation for more robust metrics
+- Tune hyperparameters (e.g. Random Forest's,Gradient Boosting's learning rate/depth) via grid search
+- Deeper error analysis — which specific cases each model gets wrong, and why
+- Evaluate on a held-out real-world sample beyond this benchmark dataset  
 
 ## Author
 
